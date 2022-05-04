@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BaladeurMultiFormatsTests
 {
-    abstract class Chanson : IChanson
+    public abstract class Chanson : IChanson
     {
         #region Champs
-        private int m_annee;
-        private string m_artiste;
-        private string m_nomFichier;
+        protected int m_annee;
+        protected string m_artiste;
+        protected string m_nomFichier;
         protected string m_titre;
         #endregion
 
@@ -42,7 +42,19 @@ namespace BaladeurMultiFormatsTests
         /// afin de l'ouvrir pour ensuite sauter l'en-tête pour lire les paroles 
         /// les traiter et les retourner.
         /// </summary>
-        public string Paroles { get; }
+        public string Paroles
+        {
+            get
+            {
+                StreamReader fichier = new StreamReader(m_nomFichier);
+                if(File.Exists(fichier.ToString()))
+                {
+                    SauterEntete(fichier);
+                    return LireParoles(fichier);
+                }
+                throw new NotImplementedException();
+            }
+        }
 
         /// <summary>
         /// Obtient le titre de la chanson
