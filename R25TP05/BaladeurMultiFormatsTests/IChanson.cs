@@ -44,7 +44,7 @@ namespace BaladeurMultiFormatsTests
         #region Méthodes
         void Ecrire(string pParoles);
 
-        void EcrireEntete(StreamWriter pobjFichier, string pParoles);
+        void EcrireEntete(StreamWriter pobjFichier);
 
         void EcrireParoles(StreamWriter pobjFichier, string pParoles);
 
