@@ -8,16 +8,12 @@ using BaladeurMultiFormats;
 
 namespace BaladeurMultiFormatsTests
 {
-    public class ChansonAAC : Chanson
+    public class ChansonMP3 : Chanson
     {
-        #region Propriétés
-        public override string Format { get => "AAC"; }
-        #endregion
+        public override string Format { get => "MP3"; }
 
-
-        #region Méthodes
-        public ChansonAAC(string pNomFichier)
-            :base(pNomFichier)
+        public ChansonMP3(string pNomFichier)
+            : base(pNomFichier)
         {
             string[] tabChanson = pNomFichier.Split(':');
             m_titre = tabChanson[0];
@@ -25,8 +21,8 @@ namespace BaladeurMultiFormatsTests
             m_annee = int.Parse(tabChanson[2]);
         }
 
-        public ChansonAAC(string pRepertoire, string pArtiste, string pTitre, int pAnnée)
-            :base(pRepertoire, pArtiste, pTitre, pAnnée)
+        public ChansonMP3(string pRepertoire, string pArtiste, string pTitre, int pAnnée)
+            : base(pRepertoire, pArtiste, pTitre, pAnnée)
         {
             m_titre = pTitre;
             m_artiste = pArtiste;
@@ -36,7 +32,7 @@ namespace BaladeurMultiFormatsTests
 
         public override void EcrireEntete(StreamWriter pobjFichier)
         {
-            pobjFichier.WriteLine(m_titre + ":" + m_artiste + ":" + m_annee.ToString("yyyy"));
+            pobjFichier.WriteLine(m_artiste + "|" + m_annee.ToString("yyyy") + "|" + m_titre);
         }
 
         public override void EcrireParoles(StreamWriter pobjFichier, string pParoles)
@@ -59,6 +55,5 @@ namespace BaladeurMultiFormatsTests
             string fichier = pobjFichier.ReadToEnd();
             return OutilsFormats.DecoderAAC(fichier);
         }
-        #endregion
     }
 }
