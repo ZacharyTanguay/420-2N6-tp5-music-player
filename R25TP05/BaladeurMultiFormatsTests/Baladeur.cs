@@ -11,36 +11,49 @@ namespace BaladeurMultiFormats
 {
     public class Baladeur : IBaladeur
     {
-        public int NbChansons => throw new NotImplementedException();
+        private List<Chanson> m_colChansons;
+        private const string NOM_RÉPERTOIRE = "Chansons";
 
-        public void AfficherLesChansons(ListView pListView)
-        {
-            throw new NotImplementedException();
-        }
+        public int NbChansons => m_colChansons.Count();
 
         public Chanson ChansonAt(int pIndex)
         {
-            throw new NotImplementedException();
+            return m_colChansons[pIndex];
         }
 
         public void ConstruireLaListeDesChansons()
         {
-            throw new NotImplementedException();
-        }
+            if (!Directory.Exists(NOM_RÉPERTOIRE))
+                throw new DirectoryNotFoundException();
 
-        public void ConvertirVersAAC(int pIndex)
-        {
-            throw new NotImplementedException();
-        }
+            DirectoryInfo d = new DirectoryInfo(NOM_RÉPERTOIRE);
 
-        public void ConvertirVersMP3(int pIndex)
-        {
-            throw new NotImplementedException();
-        }
+            foreach (var f in d.GetFiles())
+            {
+                try
+                {
 
-        public void ConvertirVersWMA(int pIndex)
-        {
-            throw new NotImplementedException();
+                    string format = f.Name.Substring(f.Name.Length - 3).ToUpper();
+                    switch (format)
+                    {
+                        case "AAC":
+                            m_colChansons.Add(new ChansonAAC(f.Name));
+                            break;
+                        case "MP3":
+                            m_colChansons.Add(new ChansonMP3(f.Name));
+                            break;
+                        case "WMA":
+                            m_colChansons.Add(new ChansonWMA(f.Name));
+                            break;
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+
+            m_colChansons = m_colChansons.OrderBy(chanson => chanson.Titre).ToList();
         }
     }
 }
