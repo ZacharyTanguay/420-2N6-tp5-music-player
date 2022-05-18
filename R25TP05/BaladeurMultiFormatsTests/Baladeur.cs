@@ -41,24 +41,24 @@ namespace BaladeurMultiFormats
             if (!Directory.Exists(NOM_RÉPERTOIRE))
                 throw new DirectoryNotFoundException();
 
-            DirectoryInfo d = new DirectoryInfo(NOM_RÉPERTOIRE);
+            DirectoryInfo directoryInfo = new DirectoryInfo(NOM_RÉPERTOIRE);
 
-            foreach (var f in d.GetFiles())
+            foreach (var file in directoryInfo.GetFiles())
             {
                 try
                 {
 
-                    string format = f.Name.Substring(f.Name.Length - 3).ToUpper();
+                    string format = file.Name.Substring(file.Name.Length - 3).ToUpper();
                     switch (format)
                     {
                         case "AAC":
-                            m_colChansons.Add(new ChansonAAC(f.Name));
+                            m_colChansons.Add(new ChansonAAC(file.Name));
                             break;
                         case "MP3":
-                            m_colChansons.Add(new ChansonMP3(f.Name));
+                            m_colChansons.Add(new ChansonMP3(file.Name));
                             break;
                         case "WMA":
-                            m_colChansons.Add(new ChansonWMA(f.Name));
+                            m_colChansons.Add(new ChansonWMA(file.Name));
                             break;
                     }
                 }
@@ -91,6 +91,22 @@ namespace BaladeurMultiFormats
             File.Delete(NOM_RÉPERTOIRE + "/" + chanson.NomFichier);
 
             m_colChansons[pIndex] = chanson;
+        }
+
+        public void ConvertirVersWMA(int pIndex)
+        {
+            Chanson chanson = m_colChansons[pIndex];
+            ChansonWMA chansonWMA = new ChansonWMA("Chansons", chanson.Artiste, chanson.Titre, chanson.Annee);
+            StreamWriter streamWriter = new StreamWriter(NOM_RÉPERTOIRE + "/" + chansonWMA.NomFichier);
+            chanson.Ecrire(chanson.Paroles);
+            streamWriter.Close();
+            File.Delete(NOM_RÉPERTOIRE + "/" + chanson.NomFichier);
+            m_colChansons[pIndex] = chanson;
+        }
+
+        public Baladeur()
+        {
+            m_colChansons = new List<Chanson>();
         }
     }
 }
