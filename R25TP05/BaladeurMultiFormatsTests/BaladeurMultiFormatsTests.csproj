@@ -47,10 +47,15 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Baladeur.cs" />
     <Compile Include="Chanson.cs" />
     <Compile Include="ChansonAAC.cs" />
+    <Compile Include="ChansonMP3.cs" />
+    <Compile Include="ChansonWMA.cs" />
+    <Compile Include="IBaladeur.cs" />
     <Compile Include="IChanson.cs" />
     <Compile Include="UnitTestConsultationTODOs.cs" />
     <Compile Include="UnitTestHistoriqueTODOs.cs" />
