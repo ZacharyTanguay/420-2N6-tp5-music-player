@@ -70,5 +70,17 @@ namespace BaladeurMultiFormats
 
             m_colChansons = m_colChansons.OrderBy(chanson => chanson.Titre).ToList();
         }
+
+        public void ConvertirVersAAC(int pIndex)
+        {
+            Chanson chanson = m_colChansons[pIndex];
+            ChansonAAC chansonACC = new ChansonAAC("Chansons", chanson.Artiste, chanson.Titre, chanson.Annee);
+            StreamWriter streamWriter = new StreamWriter(NOM_RÉPERTOIRE + "/" + chansonACC.NomFichier);
+            chanson.Ecrire(chanson.Paroles);
+            streamWriter.Close();
+            File.Delete(NOM_RÉPERTOIRE + "/" + chanson.NomFichier);
+            m_colChansons[pIndex] = chanson;
+        }
+
     }
 }
