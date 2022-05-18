@@ -27,7 +27,7 @@ namespace BaladeurMultiFormatsTests
             m_titre = pTitre;
             m_artiste = pArtiste;
             m_annee = pAnnée;
-            m_nomFichier = pRepertoire;
+            m_nomFichier = pTitre + "." + Format.ToLower();
         }
 
         public override void EcrireEntete(StreamWriter pobjFichier)
@@ -43,7 +43,7 @@ namespace BaladeurMultiFormatsTests
         public override void LireEntete()
         {
             StreamReader fichier = new StreamReader(m_nomFichier);
-            ChansonAAC chanson = new ChansonAAC(fichier.ReadLine().Trim());
+            ChansonMP3 chanson = new ChansonMP3(fichier.ReadLine().Trim());
             m_titre = chanson.Titre;
             m_artiste = chanson.Artiste;
             m_annee = chanson.Annee;

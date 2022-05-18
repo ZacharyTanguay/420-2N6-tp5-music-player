@@ -75,7 +75,7 @@ namespace BaladeurMultiFormatsTests
 
         public Chanson(string pRepertoire, string pArtiste, string pTitre, int pAnnée)
         {
-            m_nomFichier = pRepertoire;
+            m_nomFichier = pTitre + "." + Format.ToLower();
             m_artiste = pArtiste;
             m_titre = pTitre;
             m_annee = pAnnée;

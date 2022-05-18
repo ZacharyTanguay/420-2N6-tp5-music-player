@@ -8,11 +8,11 @@ using BaladeurMultiFormats;
 
 namespace BaladeurMultiFormatsTests
 {
-    public class ChansonMWA : Chanson
+    public class ChansonWMA : Chanson
     {
         public override string Format { get => "MP3"; }
 
-        public ChansonMWA(string pNomFichier)
+        public ChansonWMA(string pNomFichier)
             : base(pNomFichier)
         {
             string[] tabChanson = pNomFichier.Split(':');
@@ -21,13 +21,13 @@ namespace BaladeurMultiFormatsTests
             m_annee = int.Parse(tabChanson[2]);
         }
 
-        public ChansonMWA(string pRepertoire, string pArtiste, string pTitre, int pAnnée)
+        public ChansonWMA(string pRepertoire, string pArtiste, string pTitre, int pAnnée)
             : base(pRepertoire, pArtiste, pTitre, pAnnée)
         {
             m_titre = pTitre;
             m_artiste = pArtiste;
             m_annee = pAnnée;
-            m_nomFichier = pRepertoire;
+            m_nomFichier = pTitre + "." + Format.ToLower();
         }
 
         public override void EcrireEntete(StreamWriter pobjFichier)
@@ -44,7 +44,7 @@ namespace BaladeurMultiFormatsTests
         public override void LireEntete()
         {
             StreamReader fichier = new StreamReader(m_nomFichier);
-            ChansonAAC chanson = new ChansonAAC(fichier.ReadLine().Trim());
+            ChansonWMA chanson = new ChansonWMA(fichier.ReadLine().Trim());
             m_titre = chanson.Titre;
             m_artiste = chanson.Artiste;
             m_annee = chanson.Annee;

@@ -31,7 +31,7 @@ namespace BaladeurMultiFormatsTests
             m_titre = pTitre;
             m_artiste = pArtiste;
             m_annee = pAnnée;
-            m_nomFichier = pRepertoire;
+            m_nomFichier = pTitre + "." + Format.ToLower();
         }
 
         public override void EcrireEntete(StreamWriter pobjFichier)
