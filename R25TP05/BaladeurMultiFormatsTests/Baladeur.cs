@@ -16,6 +16,21 @@ namespace BaladeurMultiFormats
 
         public int NbChansons => m_colChansons.Count();
 
+        public void AfficherLesChansons(ListView pListView)
+        {
+            foreach (Chanson chanson in m_colChansons)
+            {
+                ListViewItem i = new ListViewItem(chanson.Artiste);
+                
+                i.SubItems.Add(chanson.Titre);
+                i.SubItems.Add(chanson.Annee.ToString());
+                i.SubItems.Add(chanson.Format);
+
+                pListView.Items.Add(i);
+            }
+
+        }
+
         public Chanson ChansonAt(int pIndex)
         {
             return m_colChansons[pIndex];
