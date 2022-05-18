@@ -64,7 +64,6 @@ namespace BaladeurMultiFormats
                 }
                 catch
                 {
-
                 }
             }
 
@@ -82,5 +81,16 @@ namespace BaladeurMultiFormats
             m_colChansons[pIndex] = chanson;
         }
 
+        public void ConvertirVersMP3(int pIndex)
+        {
+            Chanson chanson = m_colChansons[pIndex];
+            ChansonMP3 chansonMP3 = new ChansonMP3("Chansons", chanson.Artiste, chanson.Titre, chanson.Annee);
+            StreamWriter streamWriter = new StreamWriter(NOM_RÉPERTOIRE + "/" + chansonMP3.NomFichier);
+            chansonMP3.Ecrire(chanson.Paroles);
+            streamWriter.Close();
+            File.Delete(NOM_RÉPERTOIRE + "/" + chanson.NomFichier);
+
+            m_colChansons[pIndex] = chanson;
+        }
     }
 }
